@@ -4,8 +4,12 @@ var mongoose = require('mongoose');
 var bodyParser = require('body-parser');
 var Users = require('./models/user');
 
+var port = process.env.OPENSHIFT_NODEJS_PORT || 8080
+var server_ip_address = process.env.OPENSHIFT_NODEJS_IP || '127.0.0.1'
+
+var mongodb_connection_string = process.env.OPENSHIFT_MONGODB_DB_URL + Users;
 // Connect to the expensemanager MongoDB
-mongoose.connect('mongodb://localhost:27017/expensemanager');
+mongoose.connect(mongodb_connection_string);
 // Create our Express application
 var app = express();
 
@@ -15,7 +19,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Use environment defined port or 3000
-var port = process.env.PORT || 3000;
+//var port = process.env.PORT || 3000;
 
 // Create our Express router
 var router = express.Router();
